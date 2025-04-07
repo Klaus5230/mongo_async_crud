@@ -21,7 +21,10 @@ const handleRefreshToken = async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      {
+        // expiresIn: "30s", //set to 30s when testing in thunder client
+        expiresIn: "10m", //set to 10min for production
+      }
     );
     res.json({ accessToken });
   });

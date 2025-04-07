@@ -24,7 +24,10 @@ const handleLogin = async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "45s" }
+      {
+        //expiresIn: "45s", //set to 45s for testing in thunder client
+        expiresIn: "10m", //set to 10minutes for production
+      }
     );
     const refreshToken = jwt.sign(
       { username: foundUser.username },
@@ -40,7 +43,7 @@ const handleLogin = async (req, res) => {
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       sameSite: "None",
-      secure: false, //set to true for production , false when working in thunder client
+      secure: true, //set to true for production , false when working in thunder client
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });
